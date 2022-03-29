@@ -1,14 +1,15 @@
 import sqlite3
+import pathlib
 import os
 
-DATABASE_PATH = "../database/"
+DATABASE_PATH = pathlib.Path(__file__).parents[2].resolve().joinpath('database/')
 
 
 def open_connection():
     if not os.path.exists(DATABASE_PATH):
         os.makedirs(DATABASE_PATH)
 
-    connection = sqlite3.connect(DATABASE_PATH + 'missing_persons.db')
+    connection = sqlite3.connect(DATABASE_PATH.joinpath('missing_persons.db'))
     cursor = connection.cursor()
 
     cursor.execute("""CREATE TABLE IF NOT EXISTS missing_persons (

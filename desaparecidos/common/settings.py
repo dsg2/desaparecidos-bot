@@ -1,6 +1,7 @@
 import configparser
+import pathlib
 
-SETTINGS_FILEPATH = '../settings.cfg'
+SETTINGS_FILEPATH = pathlib.Path(__file__).parents[2].resolve().joinpath('settings.cfg')
 
 
 def load_settings():
