@@ -1,8 +1,8 @@
-from common.settings import forum_credentials as credentials
-from common.arguments import arguments as args
+from desaparecidos.common.settings import forum_credentials as credentials
+from desaparecidos.common.arguments import arguments as args
 
-from handlers import forum_handler as fc
-from common import routines as rt
+from desaparecidos.handlers import forum_handler as fc
+from desaparecidos.common import routines as rt
 
 username = credentials['username']
 password = credentials['password']

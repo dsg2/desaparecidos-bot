@@ -1,4 +1,4 @@
-from handlers import directory_handler as dir
+from desaparecidos.handlers import directory_handler as dir
 
 
 def thread_title(location):

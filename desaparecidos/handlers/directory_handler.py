@@ -1,5 +1,5 @@
-from common.driver import driver
-from utils import string_parser as parser
+from desaparecidos.common.driver import driver
+from desaparecidos.utils import string_parser as parser
 
 from selenium.webdriver.common.by import By
 

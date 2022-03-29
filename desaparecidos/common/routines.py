@@ -1,8 +1,8 @@
-from handlers import directory_handler as dir
-from handlers import database_handler as db
-from handlers import forum_handler as fc
-from utils import post_templates as pt
-from utils import time_operations as to
+from desaparecidos.handlers import directory_handler as dir
+from desaparecidos.handlers import database_handler as db
+from desaparecidos.handlers import forum_handler as fc
+from desaparecidos.utils import post_templates as pt
+from desaparecidos.utils import time_operations as to
 
 from datetime import datetime
 import time
