@@ -8,7 +8,7 @@ from datetime import datetime
 import time
 
 
-def check_directory():
+def check_directory(post_mode):
     missing_persons_ids = dir.get_all_missing_persons_ids()
 
     for person_id in missing_persons_ids:
@@ -16,7 +16,7 @@ def check_directory():
             missing_since, location, status = dir.get_missing_person_data(person_id)
             db.create_missing_person(person_id, missing_since, location, status)
 
-            if status == 'DESAPARECIDO':
+            if status == 'DESAPARECIDO' and post_mode:
                 post_id = create_missing_person_thread(person_id, location)
                 db.update_missing_person_thread_id(person_id, post_id)
                 db.update_missing_person_last_bump(person_id, datetime.now())
