@@ -22,5 +22,14 @@ def bump_message():
     return "Up!"
 
 
-def status_update_message(status):
-    return "[SIZE=6][B]" + status.capitalize() + "[/B][/SIZE]"
+def status_update_message(status, collaborators):
+    status_update_message = "[SIZE=6][B]" + status.capitalize() + "[/B][/SIZE]"
+
+    if collaborators:
+        acknowledgement = "\n\n" + "Muchas gracias por la colaboración:"
+        for collaborator in collaborators:
+            acknowledgement += " @" + collaborator
+
+        status_update_message += acknowledgement
+
+    return status_update_message

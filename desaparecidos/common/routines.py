@@ -40,7 +40,7 @@ def check_monitored_persons():
 
         else:
             db.update_missing_person_status(person_id, current_status)
-            fc.reply_to_thread(thread_id, pt.status_update_message(current_status))
+            fc.reply_to_thread(thread_id, pt.status_update_message(current_status, fc.get_collaborators(thread_id)))
             time.sleep(30)
 
 
