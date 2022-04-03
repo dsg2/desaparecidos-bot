@@ -13,5 +13,5 @@ def day_difference(d1, d2):
 
 def get_weeks_missing(missing_since):
     days_missing = day_difference(datetime.today(), datetime.fromisoformat(missing_since))
-    weeks_missing = int(days_missing / 7)
+    weeks_missing = int(days_missing / 7) + 1
     return weeks_missing
