@@ -11,7 +11,7 @@ def day_difference(d1, d2):
     return abs((d2 - d1).days)
 
 
-def get_bump_period(missing_since):
+def get_weeks_missing(missing_since):
     days_missing = day_difference(datetime.today(), datetime.fromisoformat(missing_since))
     weeks_missing = int(days_missing / 7)
-    return pow(2, weeks_missing)
+    return weeks_missing

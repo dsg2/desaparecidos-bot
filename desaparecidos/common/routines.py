@@ -16,7 +16,9 @@ def check_directory(post_mode):
             missing_since, location, status = dir.get_missing_person_data(person_id)
             db.create_missing_person(person_id, missing_since, location, status)
 
-            if status == 'DESAPARECIDO' and post_mode:
+            if post_mode and status == 'DESAPARECIDO' and \
+                    to.day_difference(datetime.today().date(), missing_since) <= 30:
+
                 post_id = create_missing_person_thread(person_id, location)
                 db.update_missing_person_thread_id(person_id, post_id)
                 db.update_missing_person_last_bump(person_id, datetime.now())
@@ -31,16 +33,16 @@ def check_monitored_persons():
         _, _, current_status = dir.get_missing_person_data(person_id)
 
         if current_status == 'DESAPARECIDO':
-            bump_period = to.get_bump_period(missing_since)
+            bump_period = to.get_weeks_missing(missing_since)
             time_since_last_bump = to.hour_difference(last_bump)
             if time_since_last_bump >= bump_period:
-                db.update_missing_person_last_bump(person_id, datetime.now())
                 fc.reply_to_thread(thread_id, pt.bump_message())
+                db.update_missing_person_last_bump(person_id, datetime.now())
                 time.sleep(30)
 
         else:
-            db.update_missing_person_status(person_id, current_status)
             fc.reply_to_thread(thread_id, pt.status_update_message(current_status, fc.get_collaborators(thread_id)))
+            db.update_missing_person_status(person_id, current_status)
             time.sleep(30)
 
 
