@@ -68,4 +68,4 @@ def get_collaborators(thread_id):
             user_id = parser.get_forum_element_id_from_url(user_profile_url)
             collaborators.append((user_id, participant.text))
 
-    return sorted(collaborators)
+    return sorted(collaborators, key=lambda x: x[1])
