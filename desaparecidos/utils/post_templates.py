@@ -28,7 +28,7 @@ def status_update_message(status, collaborators):
     if collaborators:
         acknowledgement = "\n\n" + "Muchas gracias por la colaboración:"
         for collaborator in collaborators:
-            acknowledgement += " @" + collaborator
+            acknowledgement += " [MENTION=" + collaborator[0] + "]" + collaborator[1] + "[/MENTION]"
 
         status_update_message += acknowledgement
 

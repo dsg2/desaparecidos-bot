@@ -33,7 +33,7 @@ def get_missing_person_data(missing_person_id):
 def get_missing_person_missing_since():
     missing_since_text = driver.find_elements(By.CLASS_NAME, 'tag-info-fisica')[0]. \
         find_element(By.XPATH, '..').text.split(' ')[-1]
-    return parser.parse_date(missing_since_text)
+    return parser.parse_date_from_directory(missing_since_text)
 
 
 def get_missing_person_location():

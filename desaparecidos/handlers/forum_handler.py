@@ -39,7 +39,7 @@ def create_thread(subject, body):
     input_message.send_keys(body)
     button_submit.click()
 
-    post_id = parser.get_post_id(driver.current_url)
+    post_id = parser.get_forum_element_id_from_url(driver.current_url)
     return post_id
 
 
@@ -52,7 +52,7 @@ def reply_to_thread(thread_id, message):
     input_message.send_keys(message)
     button_submit.click()
 
-    post_id = parser.get_post_id(driver.current_url)
+    post_id = parser.get_forum_element_id_from_url(driver.current_url)
     return post_id
 
 
@@ -64,6 +64,8 @@ def get_collaborators(thread_id):
     participants = driver.find_elements(By.XPATH, '//a[@target = "_blank"]')
     for participant in participants:
         if participant.text.lower() != credentials['username'].lower():
-            collaborators.append(participant.text)
+            user_profile_url = participant.get_attribute('href')
+            user_id = parser.get_forum_element_id_from_url(user_profile_url)
+            collaborators.append((user_id, participant.text))
 
     return sorted(collaborators)
