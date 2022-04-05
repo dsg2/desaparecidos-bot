@@ -2,7 +2,7 @@ from desaparecidos.handlers import directory_handler as dir
 
 
 def thread_title(location):
-    return "URGENTE: DESAPARECIDO en " + location.upper()
+    return "URGENTE: DESAPARECIDO en " + location.upper().strip(" .,")
 
 
 def thread_body(missing_person_id):
