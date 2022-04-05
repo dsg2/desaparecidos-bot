@@ -3,6 +3,7 @@ from desaparecidos.handlers import database_handler as db
 from desaparecidos.handlers import forum_handler as fc
 from desaparecidos.utils import post_templates as pt
 from desaparecidos.utils import time_operations as to
+from desaparecidos.utils import string_parser as parser
 
 from datetime import datetime
 import time
@@ -47,4 +48,4 @@ def check_monitored_persons():
 
 
 def create_missing_person_thread(person_id, location):
-    return fc.create_thread(pt.thread_title(location), pt.thread_body(person_id))
+    return fc.create_thread(pt.thread_title(parser.remove_location_redundancy(location)), pt.thread_body(person_id))
