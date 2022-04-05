@@ -5,6 +5,7 @@ from desaparecidos.utils import string_parser as parser
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 
 URL_LOGIN = "https://forocoches.com/foro/misc.php?do=page&template=ident"
 URL_CREATE_THREAD = "https://forocoches.com/foro/newthread.php?do=newthread&f=2"
@@ -44,13 +45,17 @@ def create_thread(subject, body):
 
 
 def reply_to_thread(thread_id, message):
-    driver.get(URL_THREAD + str(thread_id))
+    try:
+        driver.get(URL_THREAD + str(thread_id))
 
-    input_message = driver.find_element(By.ID, 'vB_Editor_QR_textarea')
-    button_submit = driver.find_element(By.ID, 'qr_submit')
+        input_message = driver.find_element(By.ID, 'vB_Editor_QR_textarea')
+        button_submit = driver.find_element(By.ID, 'qr_submit')
 
-    input_message.send_keys(message)
-    button_submit.click()
+        input_message.send_keys(message)
+        button_submit.click()
+
+    except NoSuchElementException:
+        pass
 
     post_id = parser.get_forum_element_id_from_url(driver.current_url)
     return post_id
