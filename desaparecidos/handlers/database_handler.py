@@ -59,6 +59,11 @@ def update_missing_person_last_bump(missing_person_id, last_bump):
     connection.commit()
 
 
+def get_last_global_bump():
+    cursor.execute("SELECT MAX(last_bump) FROM missing_persons")
+    return cursor.fetchall()[0][0]
+
+
 def get_monitored_persons():
     cursor.execute('SELECT * FROM missing_persons WHERE thread_id IS NOT NULL AND status = "DESAPARECIDO"')
     return cursor.fetchall()

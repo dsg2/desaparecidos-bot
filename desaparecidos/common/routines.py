@@ -34,9 +34,11 @@ def check_monitored_persons():
         _, _, current_status = dir.get_missing_person_data(person_id)
 
         if current_status == 'DESAPARECIDO':
-            bump_period = to.get_weeks_missing(missing_since)
-            time_since_last_bump = to.hour_difference(last_bump)
-            if time_since_last_bump >= bump_period:
+            bump_period = to.get_bump_period(to.get_weeks_missing(missing_since))
+            time_since_last_bump = to.minute_difference(last_bump)
+            time_since_last_global_bump = to.minute_difference(db.get_last_global_bump())
+
+            if time_since_last_bump >= bump_period and time_since_last_global_bump >= to.GLOBAL_BUMP_DELAY:
                 fc.reply_to_thread(thread_id, pt.bump_message())
                 db.update_missing_person_last_bump(person_id, datetime.now())
                 time.sleep(30)
