@@ -16,9 +16,10 @@ def check_directory(post_mode):
         if not db.missing_person_exists(person_id):
             missing_since, location, status = dir.get_missing_person_data(person_id)
             db.create_missing_person(person_id, missing_since, location, status)
+            today = datetime.today().date()
 
             if post_mode and status == 'DESAPARECIDO' and \
-                    to.day_difference(datetime.today().date(), missing_since) <= 30:
+               to.day_difference(today, missing_since) <= 30:
 
                 post_id = create_missing_person_thread(person_id, location)
                 db.update_missing_person_thread_id(person_id, post_id)
@@ -32,16 +33,17 @@ def check_monitored_persons():
     for person in monitored_persons:
         person_id, missing_since, location, status, last_bump, thread_id = person
         _, _, current_status = dir.get_missing_person_data(person_id)
+        last_global_bump = db.get_last_global_bump()
 
         if current_status == 'DESAPARECIDO':
-            bump_period = to.get_bump_period(to.get_weeks_missing(missing_since))
-            time_since_last_bump = to.minute_difference(last_bump)
-            time_since_last_global_bump = to.minute_difference(db.get_last_global_bump())
+            time_since_last_bump = to.minutes_since(last_bump)
+            time_since_last_global_bump = to.minutes_since(last_global_bump)
 
-            if time_since_last_bump >= bump_period and time_since_last_global_bump >= to.GLOBAL_BUMP_DELAY:
+            if time_since_last_bump >= to.INDIVIDUAL_BUMP_DELAY and \
+               time_since_last_global_bump >= to.GLOBAL_BUMP_DELAY:
+
                 fc.reply_to_thread(thread_id, pt.bump_message())
                 db.update_missing_person_last_bump(person_id, datetime.now())
-                to.generate_new_time_offset()
                 time.sleep(30)
 
         else:
