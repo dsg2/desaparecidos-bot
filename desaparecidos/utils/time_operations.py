@@ -3,6 +3,8 @@ from random import randint
 
 GLOBAL_BUMP_DELAY = 5
 
+time_offset = randint(-5, 5)
+
 
 def day_difference(d1, d2):
     return abs((d2 - d1).days)
@@ -27,4 +29,9 @@ def get_weeks_missing(missing_since):
 
 
 def get_bump_period(weeks_missing):
-    return weeks_missing * 60 + randint(-5, 5)
+    return weeks_missing * 60 + time_offset
+
+
+def generate_new_time_offset():
+    global time_offset
+    time_offset = randint(-5, 5)

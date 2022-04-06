@@ -41,6 +41,7 @@ def check_monitored_persons():
             if time_since_last_bump >= bump_period and time_since_last_global_bump >= to.GLOBAL_BUMP_DELAY:
                 fc.reply_to_thread(thread_id, pt.bump_message())
                 db.update_missing_person_last_bump(person_id, datetime.now())
+                to.generate_new_time_offset()
                 time.sleep(30)
 
         else:
